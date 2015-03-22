@@ -1,5 +1,7 @@
 ## Wraps a matrix with a list of functions so the result of the solve() function
 ## can be saved, instead of calling it over and over again.
+## Implemented in the style of the makeVector and cachemean functions
+## in the example.
 
 ## makeCacheMatrix()
 ## Returns an interface to an object that can store the result of solve()
@@ -48,7 +50,9 @@ cacheSolve <- function(cacheMatrix, ...) {
     m <- cacheMatrix$get() 
     
     ## Get the inverse, assuming it is a square invertible matrix
-    inv <- solve(m)
+    ## Also pass in the extra arguments as implied by the assignment,
+    ## assuming that we will never ever call this with different arguments.
+    inv <- solve(m, ...)
                                
     ## cache the result of solve() so the second time this gets called,
     ## we just return the already-solved inverse
